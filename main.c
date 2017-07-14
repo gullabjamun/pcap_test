@@ -1,4 +1,5 @@
 #include <pcap.h>
+#include "protocol_information.h"
     #include <stdio.h>
 
      int main(int argc, char *argv[])
@@ -10,8 +11,10 @@
         char filter_exp[] = "port 80";	/* The filter expression */
         bpf_u_int32 mask;		/* Our netmask */
         bpf_u_int32 net;		/* Our IP */
-        struct pcap_pkthdr header;	/* The header that pcap gives us */
+        struct pcap_pkthdr *header;	/* The header that pcap gives us */
         const u_char *packet;		/* The actual packet */
+
+	
 
         /* Define the device */
         dev = pcap_lookupdev(errbuf);
@@ -43,9 +46,10 @@
 	while(1)
 	{
 	 /* Grab a packet */
-        packet = pcap_next(handle, &header);
+        pcap_next_ex(handle, &header,&packet);
         /* Print its length */
-        printf("Jacked a packet with length of [%d]\n", header.len);
+        printf("Jacked a packet with length of [%d]\n", (*header).len);
+	printf("packet first value %x %x %x %x \n", *packet,*(packet+1),*(packet+2),*(packet+3));
         /* And close the session */
 	}
 
