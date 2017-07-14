@@ -1,5 +1,5 @@
 /* Ethernet addresses are 6 bytes */
-#include <pcap.h>
+
 #define ETHER_ADDR_LEN	6
 
 	/* Ethernet header */
