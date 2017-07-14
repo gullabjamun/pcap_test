@@ -18,9 +18,6 @@
 	struct sniff_ip *ip;
 	struct sniff_tcp *tcp;
 
-
-	
-
         /* Define the device */
         dev = pcap_lookupdev(errbuf);
         if (dev == NULL) {
@@ -50,14 +47,16 @@
         }
 	while(1)
 	{
+	int res;
 	 /* Grab a packet */
-        pcap_next_ex(handle, &header,&packet);
-        /* Print its length */
+        res=pcap_next_ex(handle, &header,&packet);
+        if(res==0) continue;
+	/* Print its length */
         printf("Jacked a packet with length of [%d]\n", (*header).len);
 	printf("packet first value %x %x %x %x \n", *packet,*(packet+1),*(packet+2),*(packet+3));
 
 	ethernet=(struct sniff_ethernet*)packet;
-	printf("ethernet dst value %x\n",(*ethernet).ether_dhost[0]);
+	printf("ethernet dst value %s\n",(*ethernet).ether_dhost);
 
         /* And close the session */
 	}
