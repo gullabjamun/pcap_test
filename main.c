@@ -18,6 +18,7 @@
 	struct sniff_ethernet *ethernet;
 	struct sniff_ip *ip;
 	struct sniff_tcp *tcp;
+	struct sniff_data *data;
 
         /* Define the device */
         dev = pcap_lookupdev(errbuf);
@@ -77,6 +78,12 @@
 			printinfo((*tcp).th_sport,2);
 			printf("목적지 포트 : ");
 			printinfo((*tcp).th_dport,2);
+
+			data=(struct sniff_data*)(packet+54);
+			printf("데이터 값 : ");
+			printinfo((*data).datavalue,16);
+
+			printf("\n");
 		}
 	}	
 

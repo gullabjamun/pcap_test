@@ -53,3 +53,7 @@
 		u_short th_sum;		/* checksum */
 		u_short th_urp;		/* urgent pointer */
 };
+	struct sniff_data {
+		u_char datavalue[16];
+};
+
