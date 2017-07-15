@@ -54,8 +54,6 @@
         res=pcap_next_ex(handle, &header,&packet);
         if(res==0) continue;
 	/* Print its length */
-        printf("Jacked a packet with length of [%d]\n", (*header).len);
-	printf("packet first value %x %x %x %x \n", *packet,*(packet+1),*(packet+2),*(packet+3));
 
 	ethernet=(struct sniff_ethernet*)packet;
 	printf("이더넷 목적지 맥주소 : ");
