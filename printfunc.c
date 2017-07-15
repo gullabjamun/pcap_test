@@ -1,7 +1,7 @@
 #include "printfunc.h"
 #include <stdio.h>
 
-int printinfo(char *str,int length)
+int printinfo(unsigned char *str,int length)
 {
 	int i;
 	for(i=0;i<length;i++)

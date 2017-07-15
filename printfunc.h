@@ -1,4 +1,4 @@
 #ifndef __printfunc_h__
 #define __printfunc__
-int printinfo(char *str,int length);
+int printinfo(unsigned char *str,int length);
 #endif
