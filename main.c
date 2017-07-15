@@ -57,8 +57,10 @@
 	printf("packet first value %x %x %x %x \n", *packet,*(packet+1),*(packet+2),*(packet+3));
 
 	ethernet=(struct sniff_ethernet*)packet;
+	printf("이더넷 목적지 맥주소 : ");
 	printinfo((*ethernet).ether_dhost,6);
-
+	printf("이더넷 출지 맥주소 : ");
+	printinfo((*ethernet).ether_shost,6);
 
         /* And close the session */
 	}
