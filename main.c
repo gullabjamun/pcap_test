@@ -69,6 +69,15 @@
 		printinfo((*ip).ip_src,4);
 		printf("ip 목적지 주소 : ");
 		printinfo((*ip).ip_dst,4);
+	
+		if((*ip).ip_p=0x6)
+		{
+			tcp=(struct sniff_tcp*)(packet+34);
+			printf("출발지 포트 : ");
+			printinfo((*tcp).th_sport,2);
+			printf("목적지 포트 : ");
+			printinfo((*tcp).th_dport,2);
+		}
 	}	
 
         /* And close the session */

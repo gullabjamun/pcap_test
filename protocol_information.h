@@ -33,8 +33,8 @@
 	typedef u_int tcp_seq;
 
 	struct sniff_tcp {
-		u_short th_sport;	/* source port */
-		u_short th_dport;	/* destination port */
+		u_char th_sport[2];	/* source port */
+		u_char th_dport[2];	/* destination port */
 		tcp_seq th_seq;		/* sequence number */
 		tcp_seq th_ack;		/* acknowledgement number */
 		u_char th_offx2;	/* data offset, rsvd */
