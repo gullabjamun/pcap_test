@@ -1,5 +1,6 @@
 #include <pcap.h>
 #include "protocol_information.h"
+#include "printfunc.h"
     #include <stdio.h>
 
      int main(int argc, char *argv[])
@@ -56,7 +57,8 @@
 	printf("packet first value %x %x %x %x \n", *packet,*(packet+1),*(packet+2),*(packet+3));
 
 	ethernet=(struct sniff_ethernet*)packet;
-	printf("ethernet dst value %s\n",(*ethernet).ether_dhost);
+	printinfo((*ethernet).ether_dhost,6);
+
 
         /* And close the session */
 	}
