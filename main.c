@@ -59,8 +59,17 @@
 	ethernet=(struct sniff_ethernet*)packet;
 	printf("이더넷 목적지 맥주소 : ");
 	printinfo((*ethernet).ether_dhost,6);
-	printf("이더넷 출지 맥주소 : ");
+	printf("이더넷 출발지 맥주소 : ");
 	printinfo((*ethernet).ether_shost,6);
+	
+	if((*ethernet).ether_type==0x8)
+	{
+		ip=(struct sniff_ip*)(packet+14);
+		printf("ip 출발지 주소 : ");
+		printinfo((*ip).ip_src,4);
+		printf("ip 목적지 주소 : ");
+		printinfo((*ip).ip_dst,4);
+	}	
 
         /* And close the session */
 	}
