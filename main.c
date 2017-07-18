@@ -15,6 +15,8 @@
         struct pcap_pkthdr *header;	/* The header that pcap gives us */
         const u_char *packet;		/* The actual packet */
 
+	u_char tcpoff;
+
 	struct sniff_ethernet *ethernet;
 	struct sniff_ip *ip;
 	struct sniff_tcp *tcp;
@@ -60,6 +62,11 @@
 	printinfo((*ethernet).ether_dhost,6);
 	printf("이더넷 출발지 맥주소 : ");
 	printinfo((*ethernet).ether_shost,6);
+
+	if((*ethernet).ether_type==0x608)
+	{
+		printf("arp 패킷입니다.");
+	}
 	
 	if((*ethernet).ether_type==0x8)
 	{
@@ -69,15 +76,20 @@
 		printf("ip 목적지 주소 : ");
 		printinfo((*ip).ip_dst,4);
 	
-		if((*ip).ip_p=0x6)
+		if((*ip).ip_p==0x6)
 		{
 			tcp=(struct sniff_tcp*)(packet+34);
 			printf("출발지 포트 : ");
 			printinfo((*tcp).th_sport,2);
 			printf("목적지 포트 : ");
 			printinfo((*tcp).th_dport,2);
+		
+			tcpoff=(*tcp).th_offx2;
 
-			data=(struct sniff_data*)(packet+54);
+			tcpoff = tcpoff >>4;
+			tcpoff=tcpoff*4;
+
+			data=(struct sniff_data*)(packet+34+tcpoff);
 			printf("데이터 값 : ");
 			printinfo((*data).datavalue,16);
 
