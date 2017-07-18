@@ -54,7 +54,8 @@
 	int res;
 	 /* Grab a packet */
         res=pcap_next_ex(handle, &header,&packet);
-        if(res==0) continue;
+        if(res==0 || res==-1) continue;
+	else if(res==-2) break;
 	/* Print its length */
 
 	ethernet=(struct sniff_ethernet*)packet;
@@ -63,10 +64,7 @@
 	printf("이더넷 출발지 맥주소 : ");
 	printinfo((*ethernet).ether_shost,6);
 
-	if((*ethernet).ether_type==0x608)
-	{
-		printf("arp 패킷입니다.");
-	}
+
 	
 	if((*ethernet).ether_type==0x0008)
 	{
