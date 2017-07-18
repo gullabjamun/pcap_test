@@ -68,7 +68,7 @@
 		printf("arp 패킷입니다.");
 	}
 	
-	if((*ethernet).ether_type==0x8)
+	if((*ethernet).ether_type==0x0008)
 	{
 		ip=(struct sniff_ip*)(packet+14);
 		printf("ip 출발지 주소 : ");
