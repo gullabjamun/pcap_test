@@ -16,6 +16,7 @@
         const u_char *packet;		/* The actual packet */
 
 	u_char tcpoff;
+	u_char ipoff;
 
 	struct sniff_ethernet *ethernet;
 	struct sniff_ip *ip;
@@ -66,17 +67,21 @@
 
 
 	
-	if((*ethernet).ether_type==0x0008)
+	if(ntohs((*ethernet).ether_type)==0x0800)
 	{
 		ip=(struct sniff_ip*)(packet+14);
 		printf("ip 출발지 주소 : ");
 		printinfo((*ip).ip_src,4);
 		printf("ip 목적지 주소 : ");
 		printinfo((*ip).ip_dst,4);
+		
+		ipoff=(*ip).ip_vhl;
+		ipoff=ipoff & 0x0F;
+		ipoff=ipoff*4;
 	
 		if((*ip).ip_p==0x6)
 		{
-			tcp=(struct sniff_tcp*)(packet+34);
+			tcp=(struct sniff_tcp*)(packet+14+ipoff);
 			printf("출발지 포트 : ");
 			printinfo((*tcp).th_sport,2);
 			printf("목적지 포트 : ");
@@ -87,7 +92,7 @@
 			tcpoff = tcpoff >>4;
 			tcpoff=tcpoff*4;
 
-			data=(struct sniff_data*)(packet+34+tcpoff);
+			data=(struct sniff_data*)(packet+14+ipoff+tcpoff);
 			printf("데이터 값 : ");
 			printinfo((*data).datavalue,16);
 
