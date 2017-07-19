@@ -15,9 +15,11 @@
         struct pcap_pkthdr *header;	/* The header that pcap gives us */
         const u_char *packet;		/* The actual packet */
 
+	u_short datalength;
 	u_char tcpoff;
 	u_char ipoff;
-
+//	char ip_dst_str[10];
+//	char ip_src_str[10];
 	struct sniff_ethernet *ethernet;
 	struct sniff_ip *ip;
 	struct sniff_tcp *tcp;
@@ -78,7 +80,11 @@
 		ipoff=(*ip).ip_vhl;
 		ipoff=ipoff & 0x0F;
 		ipoff=ipoff*4;
+		
+
+
 	
+
 		if((*ip).ip_p==0x6)
 		{
 			tcp=(struct sniff_tcp*)(packet+14+ipoff);
@@ -87,14 +93,22 @@
 			printf("목적지 포트 : ");
 			printinfo((*tcp).th_dport,2);
 		
+
 			tcpoff=(*tcp).th_offx2;
-
-			tcpoff = tcpoff >>4;
+ 			tcpoff = tcpoff >>4;
 			tcpoff=tcpoff*4;
-
 			data=(struct sniff_data*)(packet+14+ipoff+tcpoff);
 			printf("데이터 값 : ");
+
+			datalength=(*ip).ip_len-ipoff-tcpoff;
+			if(datalength>16)
 			printinfo((*data).datavalue,16);
+			else if(datalength<16&&datalength>0)
+			printinfo((*data).datavalue,(int)datalength);
+			else 
+			printf("no data");
+
+	
 
 			printf("\n");
 		}
