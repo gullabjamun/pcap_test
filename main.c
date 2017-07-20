@@ -3,7 +3,7 @@
 #include "printfunc.h"
     #include <stdio.h>
 #include <arpa/inet.h>
-
+#define ETHERTYPE_IP 0x0800
 
      int main(int argc, char *argv[])
      {
@@ -72,7 +72,7 @@
 
 
 	
-	if(ntohs((*ethernet).ether_type)==0x0800)
+	if(ntohs((*ethernet).ether_type)==ETHERTYPE_IP)
 	{
 		ip=(struct sniff_ip*)(packet+14);
 		
@@ -83,10 +83,7 @@
 		printf("ip 목적지 주소 : ");
 		printf("%s\n",ip_dst_str);
 		
-		ipoff=(*ip).ip_vhl;
-		ipoff=ipoff & 0x0F;
-		ipoff=ipoff*4;
-		
+		ipoff=(ip->ip_vhl & 0x0F) * 4;
 
 
 	
