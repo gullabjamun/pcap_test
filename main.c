@@ -4,6 +4,7 @@
     #include <stdio.h>
 #include <arpa/inet.h>
 
+
      int main(int argc, char *argv[])
      {
         pcap_t *handle;			/* Session handle */
@@ -89,7 +90,7 @@
 
 	
 
-		if((*ip).ip_p==0x6)
+		if(ip->ip_p==IPPROTO_TCP)
 		{
 			tcp=(struct sniff_tcp*)(packet+14+ipoff);
 			
