@@ -59,7 +59,8 @@
 	      	int res;
 		 /* Grab a packet */
       		res=pcap_next_ex(handle, &header,&packet);
-      	        if(res==0 || res==-1) continue;
+      	        if(res==0) continue;
+		else if(res==-1) break;
 		else if(res==-2) break;
 		/* Print its length */
 
