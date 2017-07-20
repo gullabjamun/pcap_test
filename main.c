@@ -39,7 +39,7 @@
             mask = 0;
         }
         /* Open the session in promiscuous mode */
-        handle = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
+        handle = pcap_open_live(argv[1], BUFSIZ, 1, 1000, errbuf);
         if (handle == NULL) {
             fprintf(stderr, "Couldn't open device %s: %s\n", dev, errbuf);
             return(2);
