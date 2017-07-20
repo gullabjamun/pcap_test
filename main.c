@@ -56,18 +56,18 @@
         }
 	while(1)
 	{
-	int res;
-	 /* Grab a packet */
-        res=pcap_next_ex(handle, &header,&packet);
-        if(res==0 || res==-1) continue;
-	else if(res==-2) break;
-	/* Print its length */
+	      	int res;
+		 /* Grab a packet */
+      		res=pcap_next_ex(handle, &header,&packet);
+      	        if(res==0 || res==-1) continue;
+		else if(res==-2) break;
+		/* Print its length */
 
-	ethernet=(struct sniff_ethernet*)packet;
-	printf("이더넷 목적지 맥주소 : ");
-	printinfo((*ethernet).ether_dhost,6);
-	printf("이더넷 출발지 맥주소 : ");
-	printinfo((*ethernet).ether_shost,6);
+		ethernet=(struct sniff_ethernet*)packet;
+		printf("이더넷 목적지 맥주소 : ");
+		printinfo((*ethernet).ether_dhost,6);
+		printf("이더넷 출발지 맥주소 : ");
+		printinfo((*ethernet).ether_shost,6);
 
 
 	
