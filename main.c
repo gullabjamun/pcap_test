@@ -108,10 +108,8 @@
 			printf("데이터 값 : ");
 
 			datalength=(*ip).ip_len-ipoff-tcpoff;
-			if(datalength>16)
-			printinfo((*data).datavalue,16);
-			else if(datalength<16&&datalength>0)
-			printinfo((*data).datavalue,(int)datalength);
+			if(datalength>0)
+			printinfo((*data).datavalue,datalength > 16 ? 16 : datalength);
 			else 
 			printf("no data");
 
