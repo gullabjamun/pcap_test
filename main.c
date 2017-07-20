@@ -2,6 +2,7 @@
 #include "protocol_information.h"
 #include "printfunc.h"
     #include <stdio.h>
+#include <arpa/inet.h>
 
      int main(int argc, char *argv[])
      {
@@ -18,8 +19,8 @@
 	u_short datalength;
 	u_char tcpoff;
 	u_char ipoff;
-//	char ip_dst_str[10];
-//	char ip_src_str[10];
+	char ip_dst_str[16];
+	char ip_src_str[16];
 	struct sniff_ethernet *ethernet;
 	struct sniff_ip *ip;
 	struct sniff_tcp *tcp;
@@ -72,10 +73,13 @@
 	if(ntohs((*ethernet).ether_type)==0x0800)
 	{
 		ip=(struct sniff_ip*)(packet+14);
+		
+		inet_ntop(AF_INET,&(*ip).ip_src,ip_src_str,16);
+		inet_ntop(AF_INET,&(*ip).ip_dst,ip_dst_str,16);
 		printf("ip 출발지 주소 : ");
-		printinfo((*ip).ip_src,4);
+		printf("%s\n",ip_src_str);
 		printf("ip 목적지 주소 : ");
-		printinfo((*ip).ip_dst,4);
+		printf("%s\n",ip_dst_str);
 		
 		ipoff=(*ip).ip_vhl;
 		ipoff=ipoff & 0x0F;
@@ -88,6 +92,8 @@
 		if((*ip).ip_p==0x6)
 		{
 			tcp=(struct sniff_tcp*)(packet+14+ipoff);
+			
+			
 			printf("출발지 포트 : ");
 			printinfo((*tcp).th_sport,2);
 			printf("목적지 포트 : ");
