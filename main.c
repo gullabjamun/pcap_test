@@ -28,7 +28,7 @@
 	struct sniff_data *data;
 
         /* Define the device */
-   //   dev = pcap_lookupdev(errbuf);
+        dev = pcap_lookupdev(errbuf);
         if (dev == NULL) {
             fprintf(stderr, "Couldn't find default device: %s\n", errbuf);
             return(2);
